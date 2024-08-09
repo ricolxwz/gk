@@ -1,0 +1,1195 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="一个基础知石仓库">
+      
+      
+        <meta name="author" content="ricolxwz">
+      
+      
+        <link rel="canonical" href="https://gk.ricolxwz.de/%E4%BF%A1%E6%81%AF%E8%AE%BA/%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%92%8C%E7%86%B5/">
+      
+      
+        <link rel="prev" href="../%E7%BB%AA%E8%AE%BA/">
+      
+      
+      
+      <link rel="icon" href="../../assets/favicon-white-background.svg">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>信息论:不确定性和熵 - 基石库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.17 2.76A10.1 10.1 0 0 1 12 2c1.31 0 2.61.26 3.83.76 1.21.5 2.31 1.24 3.24 2.17.93.93 1.67 2.03 2.17 3.24.5 1.22.76 2.52.76 3.83 0 2.65-1.05 5.2-2.93 7.07A9.974 9.974 0 0 1 12 22a10.1 10.1 0 0 1-3.83-.76 9.975 9.975 0 0 1-3.24-2.17A9.974 9.974 0 0 1 2 12c0-2.65 1.05-5.2 2.93-7.07.93-.93 2.03-1.67 3.24-2.17M12 17l1.56-3.42L17 12l-3.44-1.56L12 7l-1.57 3.44L7 12l3.43 1.58L12 17Z"/></svg>');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#%E4%BF%A1%E6%81%AF" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="基石库" class="md-header__button md-logo" aria-label="基石库" data-md-component="logo">
+      <!--
+  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Logo -->
+<img id="logo_light_mode" src="../../assets/favicon-d-212121-doc.svg" alt="logo">
+<img id="logo_dark_mode" src="../../assets/favicon-w-ffffff-doc.svg" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            基石库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              信息论:不确定性和熵
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+    
+  
+  开始
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../%E6%95%B0%E6%8D%AE%E5%BA%93/%E7%BB%AA%E8%AE%BA/" class="md-tabs__link">
+          
+  
+    
+  
+  数据库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E7%BB%AA%E8%AE%BA/" class="md-tabs__link">
+          
+  
+    
+  
+  信息论
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="基石库" class="md-nav__button md-logo" aria-label="基石库" data-md-component="logo">
+      <!--
+  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Logo -->
+<img id="logo_light_mode" src="../../assets/favicon-d-212121-doc.svg" alt="logo">
+<img id="logo_dark_mode" src="../../assets/favicon-w-ffffff-doc.svg" alt="logo">
+    </a>
+    基石库
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    开始
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            开始
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数据库
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            数据库
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E5%BA%93/%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    绪论
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    数据模型
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    信息论
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            信息论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    绪论
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    不确定性和熵
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    不确定性和熵
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#%E4%BF%A1%E6%81%AF" class="md-nav__link">
+    <span class="md-ellipsis">
+      信息
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E4%BF%A1%E6%81%AF%E8%AE%BA" class="md-nav__link">
+    <span class="md-ellipsis">
+      信息论
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E6%B5%8B%E9%87%8F%E5%8D%95%E4%BD%8D" class="md-nav__link">
+    <span class="md-ellipsis">
+      测量单位
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E9%87%8F%E5%8C%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      量化的基本概念
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E9%A6%99%E5%86%9C%E4%BF%A1%E6%81%AF%E9%87%8F" class="md-nav__link">
+    <span class="md-ellipsis">
+      香农信息量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E9%A6%99%E5%86%9C%E7%86%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      香农熵
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="香农熵">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E7%86%B5%E7%9A%84%E5%90%AB%E4%B9%89%E5%8F%8A%E4%BC%A0%E7%BB%9F%E5%BA%94%E7%94%A8" class="md-nav__link">
+    <span class="md-ellipsis">
+      熵的含义及传统应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="熵的含义及传统应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%9D%97%E7%BC%96%E7%A0%81" class="md-nav__link">
+    <span class="md-ellipsis">
+      块编码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="块编码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E8%81%94%E5%90%88%E7%86%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      联合熵
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E6%9D%A1%E4%BB%B6%E7%86%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      条件熵
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#%E4%BF%A1%E6%81%AF" class="md-nav__link">
+    <span class="md-ellipsis">
+      信息
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E4%BF%A1%E6%81%AF%E8%AE%BA" class="md-nav__link">
+    <span class="md-ellipsis">
+      信息论
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E6%B5%8B%E9%87%8F%E5%8D%95%E4%BD%8D" class="md-nav__link">
+    <span class="md-ellipsis">
+      测量单位
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E9%87%8F%E5%8C%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      量化的基本概念
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E9%A6%99%E5%86%9C%E4%BF%A1%E6%81%AF%E9%87%8F" class="md-nav__link">
+    <span class="md-ellipsis">
+      香农信息量
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E9%A6%99%E5%86%9C%E7%86%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      香农熵
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="香农熵">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E7%86%B5%E7%9A%84%E5%90%AB%E4%B9%89%E5%8F%8A%E4%BC%A0%E7%BB%9F%E5%BA%94%E7%94%A8" class="md-nav__link">
+    <span class="md-ellipsis">
+      熵的含义及传统应用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="熵的含义及传统应用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%9D%97%E7%BC%96%E7%A0%81" class="md-nav__link">
+    <span class="md-ellipsis">
+      块编码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="块编码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E8%81%94%E5%90%88%E7%86%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      联合熵
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E6%9D%A1%E4%BB%B6%E7%86%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      条件熵
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+
+
+                  
+
+
+  <h1>不确定性和熵</h1>
+
+<details class="info" open="open">
+<summary>信息</summary>
+<ul>
+<li>"Guess Who"游戏: <ul>
+<li>简要介绍: <a href="https://en.wikipedia.org/wiki/Guess_Who%3F">https://en.wikipedia.org/wiki/Guess_Who%3F</a></li>
+<li>实际体验: <a href="https://www.crazygames.com/game/guess-who-multiplayer">https://www.crazygames.com/game/guess-who-multiplayer</a></li>
+<li>人物: <a href="https://web.archive.org/web/20170215034006/http://www.hasbro.com/upload/guesswho/GWc_Kooky-en_GB.pdf">https://web.archive.org/web/20170215034006/http://www.hasbro.com/upload/guesswho/GWc_Kooky-en_GB.pdf</a></li>
+</ul>
+</li>
+<li>Jupyter Notebook练习: <a href="https://github.com/ricolxwz/gk/blob/cab00842852837fca5840936d3d38a82f512df64/docs/%E4%BF%A1%E6%81%AF%E8%AE%BA/Module_1_notebook.ipynb">https://github.com/ricolxwz/gk/blob/cab00842852837fca5840936d3d38a82f512df64/docs/%E4%BF%A1%E6%81%AF%E8%AE%BA/Module_1_notebook.ipynb</a></li>
+</ul>
+</details>
+<h2 id="%E4%BF%A1%E6%81%AF">信息<a class="headerlink" href="#%E4%BF%A1%E6%81%AF" title="Permanent link">&para;</a></h2>
+<p>信息包含在问题和答案中. 信息是指一个变量(如答案, 信号, 测量值)减少我们对另一个变量的不确定性或者让我们感到惊讶的程度. 我们需要量化两个方面: 不确定性(熵, entropy)的程度和不确定性减少/让我们惊讶的程度(信息, information). 这些概念可以由香农(Claude Shannon)理论进行量化. </p>
+<h2 id="%E4%BF%A1%E6%81%AF%E8%AE%BA">信息论<a class="headerlink" href="#%E4%BF%A1%E6%81%AF%E8%AE%BA" title="Permanent link">&para;</a></h2>
+<p>信息论是一种定量捕捉信息概念的方法. 在传统意义上, 信息论回答了两个问题: </p>
+<ul>
+<li>什么是数据的最终压缩: 也就是能将文件压缩到多小</li>
+<li>什么是最终的通信传输速率: 也就是最高的下载速度是多少</li>
+</ul>
+<p>信息论在其他领域也有广泛的应用: </p>
+<p><a class="glightbox" href="https://img.ricolxwz.io/2024/07/ee100df97b4ef95d182b80b3439e5949.webp" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://img.ricolxwz.io/2024/07/ee100df97b4ef95d182b80b3439e5949.webp" style="width:400px" /></a></p>
+<h2 id="%E6%B5%8B%E9%87%8F%E5%8D%95%E4%BD%8D">测量单位<a class="headerlink" href="#%E6%B5%8B%E9%87%8F%E5%8D%95%E4%BD%8D" title="Permanent link">&para;</a></h2>
+<p>信息通过比特为单位来测量. 1比特表示对一个等概率的是/否问题的不确定性的量度, 换句话说, 一个比特可以表示为一个二元决策中的不确定性, 比如一个抛硬币的问题(正面或者反面). 回答这个是/否问题会较少1比特的不确定性或者提供1比特的信息. 例如, 如果你知道一个硬币会是正面还是反面, 你就获得了1比特的信息, 因为你解决了一个二元问题的不确定性. </p>
+<h2 id="%E9%87%8F%E5%8C%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">量化的基本概念<a class="headerlink" href="#%E9%87%8F%E5%8C%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5" title="Permanent link">&para;</a></h2>
+<p>复习一下概率论中的内容, 详情可以参考<a href="https://ml.ricolxwz.de/%E6%A6%82%E7%8E%87/%E4%B8%80%E7%BB%B4%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%E5%8F%8A%E5%85%B6%E5%88%86%E5%B8%83/">这里</a>.</p>
+<ul>
+<li>随机变量: <span class="arithmatex">\(X\)</span>是一个随机变量, 这是一个取值受随机影响的变量. 例如, 一个答案/信号/测量值. 举例来说, 抛硬币的结果, 今天是否下雨的结果都是随机变量</li>
+<li>样本或结果: <span class="arithmatex">\(x\)</span>是<span class="arithmatex">\(X\)</span>的一个样本或结果, 从一个离散的字母表<span class="arithmatex">\(A_X=\{x_1, x_2, ...\}\)</span>. 对于二元随机变量<span class="arithmatex">\(X\)</span>, 字母表<span class="arithmatex">\(A_X=\{0, 1\}\)</span>; 对于抛硬币的结果, 字母表<span class="arithmatex">\(A_X=\{heads, tails\}\)</span>, 在"猜猜谁?"游戏中, 头发颜色的字母表可以是各种头发的颜色</li>
+<li>概率分布函数(Probability Distribution Function, PDF): 定义概率分布函数<span class="arithmatex">\(p(x)\)</span>, <span class="arithmatex">\(p(x)=P(X=x), x\in A_X\)</span>. 满足<span class="arithmatex">\(0\leq p(x)\leq 1\)</span>, <span class="arithmatex">\(\sum_{x\in A_X}p(x)=1, x\in A_X\)</span></li>
+</ul>
+<h2 id="%E9%A6%99%E5%86%9C%E4%BF%A1%E6%81%AF%E9%87%8F">香农信息量<a class="headerlink" href="#%E9%A6%99%E5%86%9C%E4%BF%A1%E6%81%AF%E9%87%8F" title="Permanent link">&para;</a></h2>
+<p>香农信息量(Shannon Information Content)是一个信息论中的基本概念, 用来量化一个事件发生时所带来的信息量. 具体来说, 香农信息量描述的是某个特定事件发生时所减少的不确定性或者说, 描述的是某个特定事件发生时带来的惊喜程度.</p>
+<p>对于一个离散随机变量<span class="arithmatex">\(X\)</span>, 假设它的一个可能的取值为<span class="arithmatex">\(x\)</span>, 其发生的概率为<span class="arithmatex">\(p(x)\)</span>, 则事件<span class="arithmatex">\(x\)</span>的香农信息量<span class="arithmatex">\(h(x)\)</span>定义为: <span class="arithmatex">\(h(x)=\log_2(\frac{1}{p(x)})=-\log_2(p(x))\)</span>. 可以看出:</p>
+<ul>
+<li>由于<span class="arithmatex">\(0\leq p(x)\leq 1\)</span>, 可得知<span class="arithmatex">\(h(x)\geq 0\)</span></li>
+<li>如果事件<span class="arithmatex">\(x\)</span>一定发生的话, 即<span class="arithmatex">\(p(x)=1\)</span>, 则<span class="arithmatex">\(h(x)=0\)</span>, 没有惊喜</li>
+<li>当事件<span class="arithmatex">\(x\)</span>的概率<span class="arithmatex">\(p(x)\)</span>减小时, 惊喜也会增加</li>
+</ul>
+<p>函数图像为: </p>
+<p><a class="glightbox" href="https://img.ricolxwz.io/2024/08/e853e09c6248971025eaa9a7704a13c7.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://img.ricolxwz.io/2024/08/e853e09c6248971025eaa9a7704a13c7.png" style="width:400px" /></a></p>
+<details class="example" open="open">
+<summary>例子</summary>
+<p>在"Guess Who"游戏中, 若询问的问题是"是不是Jason", 若总共有<span class="arithmatex">\(24\)</span>个人, 如果回答"是", 那么该事件的香农信息量为<span class="arithmatex">\(\log_2 24\simeq 4.58\)</span>; 如果回答"不是", 那么该事件的香农信息量为<span class="arithmatex">\(\log_2 24/23\simeq 0.06\)</span>. 可见, 前者导致不确定性减少的程度远远大于后者.</p>
+</details>
+<h2 id="%E9%A6%99%E5%86%9C%E7%86%B5">香农熵<a class="headerlink" href="#%E9%A6%99%E5%86%9C%E7%86%B5" title="Permanent link">&para;</a></h2>
+<p>香农熵(Shannon Entropy)是一种衡量信息源不确定性的度量, 表示的是随机变量的平均信息量. 随机变量<span class="arithmatex">\(X\)</span>的香农熵的定义如下: <span class="arithmatex">\(H(X)=\sum_{x\in A_x}p(x)\log_2 \frac{1}{p(x)}=-\sum_{x\in A_x}p(x)\log_2 p(x)\)</span>. 也就是说, 香农熵是香农信息量的期望, 可以看出: </p>
+<ul>
+<li>若所有的结果<span class="arithmatex">\(x\)</span>的概率都为<span class="arithmatex">\(p(x)=\frac{1}{|A_X|}\)</span>, 那么香农熵<span class="arithmatex">\(H(X)=\log_2|A_X|\)</span></li>
+<li>对于随机变量<span class="arithmatex">\(X\)</span>, <span class="arithmatex">\(p(0) = 0.5\)</span>, <span class="arithmatex">\(p(1)=0.5\)</span>, 那么香农熵<span class="arithmatex">\(H(X)=1\)</span></li>
+<li>若存在一个结果<span class="arithmatex">\(x\)</span>的概率<span class="arithmatex">\(p(x)=1\)</span>, 则其他所有结果的概率都为<span class="arithmatex">\(0\)</span>, 那么香农熵<span class="arithmatex">\(H(X)=0\)</span></li>
+</ul>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>当<span class="arithmatex">\(p\)</span>趋近于<span class="arithmatex">\(0\)</span>的时候, <span class="arithmatex">\(p\log p\)</span>趋近于0.</p>
+</details>
+<details class="example" open="open">
+<summary>例子</summary>
+<p>在"Guess Who"游戏中, 若询问的问题是"是不是Jason", 若总共有<span class="arithmatex">\(24\)</span>个人, 如果回答"是", 那么该事件的香农信息量为<span class="arithmatex">\(\log_2 24\simeq 4.58\)</span>; 如果回答"不是", 那么该事件的香农信息量为<span class="arithmatex">\(\log_2 24/23\simeq 0.06\)</span>. 可以计算香农熵: <span class="arithmatex">\(H(X)=-\frac{1}{24}\log_2 \frac{1}{24}-\frac{23}{24}\log_2 \frac{23}{24}\simeq 0.25\)</span>. 所以你的回答("是"或"否")会导致不确定性程度平均减少约<span class="arithmatex">\(0.25\)</span>.</p>
+<p>若询问的问题是"是不是有一个眼睛", 如果回答"有", 那么该事件的香农信息量为<span class="arithmatex">\(-\log_2 \frac{5}{24}\simeq 2.26\)</span>; 如果回答"没有", 那么该事件的香农信息量为<span class="arithmatex">\(-\log_2 \frac{19}{24}\simeq 0.34\)</span>. 可以计算香农熵: <span class="arithmatex">\(H(X)=-\frac{5}{24}\log_2 \frac{5}{24}-\frac{19}{24}\log_2 \frac{19}{24}\simeq 0.74\)</span>, 所以你的回答("有"或"没有")会导致不确定性程度平均减少约<span class="arithmatex">\(0.74\)</span>.</p>
+<p>从上面, 可以看出, 后面那个问题, 不管怎么回答, 平均不确定性程度减少的程度较大. 所以应该问后面那个问题.</p>
+</details>
+<h3 id="%E7%86%B5%E7%9A%84%E5%90%AB%E4%B9%89%E5%8F%8A%E4%BC%A0%E7%BB%9F%E5%BA%94%E7%94%A8">熵的含义及传统应用<a class="headerlink" href="#%E7%86%B5%E7%9A%84%E5%90%AB%E4%B9%89%E5%8F%8A%E4%BC%A0%E7%BB%9F%E5%BA%94%E7%94%A8" title="Permanent link">&para;</a></h3>
+<p>在编码/压缩中, 我们可以经常碰到熵的概念. 假设<span class="arithmatex">\(x\)</span>是需要传递的信息, 每一个信息对应的概率为<span class="arithmatex">\(p(x)\)</span>. <span class="arithmatex">\(h(x)\)</span>表示每个信息<span class="arithmatex">\(x\)</span>的编码长度, 即为了传递<span class="arithmatex">\(x\)</span>需要的比特数. 在一个最优的编码方案中, <span class="arithmatex">\(p(x)\)</span>越小, 其对应的编码长度<span class="arithmatex">\(h(x)\)</span>就越长(参考霍夫曼树). <span class="arithmatex">\(H(X)\)</span>表示传递随机变量<span class="arithmatex">\(X\)</span>所需要的理论最佳平均比特数, 它指的就是熵.</p>
+<p>对于每个样本进行逐个编码的时候, 由于比特是数字系统的最小单位, 所以只能是整数个比特.</p>
+<details class="example" open="open">
+<summary>例子</summary>
+<p>假设有一个二进制随机变量<span class="arithmatex">\(X\)</span>, 概率为<span class="arithmatex">\(p(0)=0.9, p(1)=0.1\)</span>, 计算所得熵<span class="arithmatex">\(H(X)=-(0.9\log_2 0.9+0.1\log_2 0.1)\simeq 0.469\)</span>. 尽管熵是<span class="arithmatex">\(0.469\)</span>比特, 我们仍然需要用整数比特来编码整个样本, 即<span class="arithmatex">\(1\)</span>比特.</p>
+</details>
+<h4 id="%E5%9D%97%E7%BC%96%E7%A0%81">块编码<a class="headerlink" href="#%E5%9D%97%E7%BC%96%E7%A0%81" title="Permanent link">&para;</a></h4>
+<p>熵是理论熵的最低限度, 即在最优编码方案下传递信息所需的平均比特数. 任何实际编码方案的平均长度如果超过这个值, 就意味着存在冗余. 如果编码长度大于熵, 就存在多余的比特, 这些比特不携带有用的信息, 通过减少这些冗余, 可以更加高效的传递信息. 单个样本编码通常需要整数比特, 难以完全达到熵的值. 通过块编码(即将多个样本一起编码), 可以使得每个样本的平均编码长度更接近其熵值, 从而减少冗余, 增加爱编码效率.</p>
+<h5 id="%E8%81%94%E5%90%88%E7%86%B5">联合熵<a class="headerlink" href="#%E8%81%94%E5%90%88%E7%86%B5" title="Permanent link">&para;</a></h5>
+<p>二维(多维)随机变量的熵, 称为联合熵, 联合熵的定义为<span class="arithmatex">\(H(X, Y)=\sum_{x\in A_x}\sum_{y\in A_y}p(x, y)\log_2\frac{1}{p(x, y)}=\sum_{x\in A_x}\sum_{y\in A_y}-p(x, y)\log_2p(x, y)\)</span>. 我们将<span class="arithmatex">\(H(X)\)</span>或者<span class="arithmatex">\(H(Y)\)</span>称为边际熵.</p>
+<details class="warning" open="open">
+<summary>注意</summary>
+<p><span class="arithmatex">\(H(X, Y)=H(X)+H(Y)\)</span>仅当随机变量<span class="arithmatex">\(X\)</span>和<span class="arithmatex">\(Y\)</span>独立的时候才成立.</p>
+</details>
+<details class="example" open="open">
+<summary>例子</summary>
+<p>仍然使用上面的例子. 现在我们考虑块编码, 即将两个样本组合进行编码. 样本对的可能取值以及它们的概率如下: </p>
+<ul>
+<li><span class="arithmatex">\(00\)</span>: <span class="arithmatex">\(0.9 * 0.9 = 0.81\)</span></li>
+<li><span class="arithmatex">\(01\)</span>: <span class="arithmatex">\(0.9 * 0.1 = 0.09\)</span></li>
+<li><span class="arithmatex">\(10\)</span>: <span class="arithmatex">\(0.1 * 0.9 = 0.09\)</span></li>
+<li><span class="arithmatex">\(11\)</span>: <span class="arithmatex">\(0.1 * 0.1 = 0.01\)</span></li>
+</ul>
+<p>计算熵为<span class="arithmatex">\(1.163\)</span>比特, 即对两个样本的块编码熵为<span class="arithmatex">\(1.163\)</span>比特, 所以平均每个样本的熵为<span class="arithmatex">\(\frac{1.163}{2}\simeq 0.5815\)</span>比特. 可以看到, 使用了块编码之后, 平均比特数, 即<span class="arithmatex">\(1\)</span>, 更加接近其熵, 即理论最佳平均比特数, 即<span class="arithmatex">\(0.5815\)</span>. 所以说, 使用块编码比使用单个编码更加高效. </p>
+</details>
+<h5 id="%E6%9D%A1%E4%BB%B6%E7%86%B5">条件熵<a class="headerlink" href="#%E6%9D%A1%E4%BB%B6%E7%86%B5" title="Permanent link">&para;</a></h5>
+<p>条件熵<span class="arithmatex">\(H(X|Y)\)</span>表示当我们已经知道了<span class="arithmatex">\(Y\)</span>的样本值<span class="arithmatex">\(y\)</span>时, 对于<span class="arithmatex">\(X\)</span>的样本值<span class="arithmatex">\(x\)</span>的平均剩余惊讶. 条件信息量和条件熵的计算公式为:</p>
+<ul>
+<li><span class="arithmatex">\(h(x|y)=h(x, y)-h(y)\)</span></li>
+<li><span class="arithmatex">\(h(x|y)=-\log_2 p(x|y)\)</span></li>
+<li><span class="arithmatex">\(H(X|y)=\sum_{x\in A_x}p(x|y)\log_2\frac{1}{p(x|y)}\)</span></li>
+<li><span class="arithmatex">\(H(X|Y)=\sum_{y\in A_y}p(y)H(X|y)\)</span></li>
+<li><span class="arithmatex">\(H(X|Y)=\sum_{x\in A_x}\sum_{y\in A_y}p(x, y)\log_2 \frac{1}{p(x|y)}\)</span></li>
+<li><span class="arithmatex">\(H(X|Y)=H(X, Y)-H(Y)\)</span></li>
+</ul>
+<p>条件熵的一些属性:</p>
+<ul>
+<li><span class="arithmatex">\(0\leq H(X|Y)\leq H(X)\)</span></li>
+<li>当<span class="arithmatex">\(X\)</span>与<span class="arithmatex">\(Y\)</span>独立的时候, <span class="arithmatex">\(H(X|Y)=H(X)\)</span></li>
+<li><span class="arithmatex">\(H(X|Y)=0\)</span>意味着只要知道了<span class="arithmatex">\(Y\)</span>, 那么<span class="arithmatex">\(X\)</span>没有任何惊讶</li>
+<li><span class="arithmatex">\(H(X, Y)=H(X)+H(Y|X)\)</span></li>
+<li><span class="arithmatex">\(H(X, Y)=H(Y)+H(X|Y)\)</span></li>
+<li><span class="arithmatex">\(H(X_1, X_2, ..., X_n) = \sum_{i=1}^{n}H(X_i|X_1, ..., X_{i-1})\)</span></li>
+</ul>
+<p>文式图表示:</p>
+<p><a class="glightbox" href="https://img.ricolxwz.io/2024/08/c2e19c07e7381c048c819d78f8526aff.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://img.ricolxwz.io/2024/08/c2e19c07e7381c048c819d78f8526aff.png" style="width:400px" /></a></p>
+<details class="example" open="open">
+<summary>例子</summary>
+<p>假设我们正在编码一段英文文本, 且我们知道前一个字符是字母"q", 则我们可以高度确定下一个字符是"u". 因为在英文中"q"后面几乎总是跟随着"u", 这种情况下, 条件熵<span class="arithmatex">\(H(X|Y)\)</span>会显著低于整体熵<span class="arithmatex">\(H(X)\)</span>, 因为知道前一个字符"q"大大减少了对下一个字符的惊讶. 这就是"<a href="https://zh.wikipedia.org/wiki/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE">马可夫链</a>".</p>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <script src="https://giscus.app/client.js"
+        data-repo="ricolxwz/gk"
+        data-repo-id="R_kgDOMZ6IeA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOMZ6IeM4ChF-C"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 ricolxwz
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/ricolxwz" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://gitlab.com/ricolxwz" target="_blank" rel="noopener" title="gitlab.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="m503.5 204.6-.7-1.8-69.7-181.78c-1.4-3.57-3.9-6.59-7.2-8.64-2.4-1.55-5.1-2.515-8-2.81-2.9-.295-5.7.083-8.4 1.11-2.7 1.02-5.1 2.66-7.1 4.78-1.9 2.12-3.3 4.67-4.1 7.44l-47 144H160.8l-47.1-144c-.8-2.77-2.2-5.31-4.1-7.43-2-2.12-4.4-3.75-7.1-4.77a18.1 18.1 0 0 0-8.38-1.113 18.4 18.4 0 0 0-8.04 2.793 18.09 18.09 0 0 0-7.16 8.64L9.267 202.8l-.724 1.8a129.57 129.57 0 0 0-3.52 82c7.747 26.9 24.047 50.7 46.447 67.6l.27.2.59.4 105.97 79.5 52.6 39.7 32 24.2c3.7 1.9 8.3 4.3 13 4.3 4.7 0 9.3-2.4 13-4.3l32-24.2 52.6-39.7 106.7-79.9.3-.3c22.4-16.9 38.7-40.6 45.6-67.5 8.6-27 7.4-55.8-2.6-82z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/ricolxwz" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.footnote.tooltips", "content.tooltips", "navigation.tabs", "navitation.sections", "navigation.expand", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "navigation.tracking"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../js/open_in_new_tab.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>

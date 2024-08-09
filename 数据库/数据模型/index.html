@@ -1,0 +1,1592 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="一个基础知石仓库">
+      
+      
+        <meta name="author" content="ricolxwz">
+      
+      
+        <link rel="canonical" href="https://gk.ricolxwz.de/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B/">
+      
+      
+        <link rel="prev" href="../%E7%BB%AA%E8%AE%BA/">
+      
+      
+        <link rel="next" href="../../%E4%BF%A1%E6%81%AF%E8%AE%BA/%E7%BB%AA%E8%AE%BA/">
+      
+      
+      <link rel="icon" href="../../assets/favicon-white-background.svg">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.31">
+    
+    
+      
+        <title>数据库:数据模型 - 基石库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.17 2.76A10.1 10.1 0 0 1 12 2c1.31 0 2.61.26 3.83.76 1.21.5 2.31 1.24 3.24 2.17.93.93 1.67 2.03 2.17 3.24.5 1.22.76 2.52.76 3.83 0 2.65-1.05 5.2-2.93 7.07A9.974 9.974 0 0 1 12 22a10.1 10.1 0 0 1-3.83-.76 9.975 9.975 0 0 1-3.24-2.17A9.974 9.974 0 0 1 2 12c0-2.65 1.05-5.2 2.93-7.07.93-.93 2.03-1.67 3.24-2.17M12 17l1.56-3.42L17 12l-3.44-1.56L12 7l-1.57 3.44L7 12l3.43 1.58L12 17Z"/></svg>');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#%E4%B8%A4%E7%B1%BB%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="基石库" class="md-header__button md-logo" aria-label="基石库" data-md-component="logo">
+      <!--
+  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Logo -->
+<img id="logo_light_mode" src="../../assets/favicon-d-212121-doc.svg" alt="logo">
+<img id="logo_dark_mode" src="../../assets/favicon-w-ffffff-doc.svg" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            基石库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              数据库:数据模型
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+    
+  
+  开始
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../%E7%BB%AA%E8%AE%BA/" class="md-tabs__link">
+          
+  
+    
+  
+  数据库
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../%E4%BF%A1%E6%81%AF%E8%AE%BA/%E7%BB%AA%E8%AE%BA/" class="md-tabs__link">
+          
+  
+    
+  
+  信息论
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="基石库" class="md-nav__button md-logo" aria-label="基石库" data-md-component="logo">
+      <!--
+  Copyright (c) 2016-2024 Martin Donath <martin.donath@squidfunk.com>
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+<!-- Logo -->
+<img id="logo_light_mode" src="../../assets/favicon-d-212121-doc.svg" alt="logo">
+<img id="logo_dark_mode" src="../../assets/favicon-w-ffffff-doc.svg" alt="logo">
+    </a>
+    基石库
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    开始
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            开始
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    数据库
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            数据库
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    绪论
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    数据模型
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    数据模型
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#%E4%B8%A4%E7%B1%BB%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B" class="md-nav__link">
+    <span class="md-ellipsis">
+      两类数据模型
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B" class="md-nav__link">
+    <span class="md-ellipsis">
+      概念模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="概念模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E4%BF%A1%E6%81%AF%E4%B8%96%E7%95%8C%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      信息世界的基本概念
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="信息世界的基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%AE%9E%E4%BD%93-%E5%AE%9E%E4%BD%93%E5%9E%8B%E5%92%8C%E5%AE%9E%E4%BD%93%E9%9B%86" class="md-nav__link">
+    <span class="md-ellipsis">
+      实体, 实体型和实体集
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实体, 实体型和实体集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%BC%BA%E5%BC%B1%E5%AE%9E%E4%BD%93%E5%9E%8B" class="md-nav__link">
+    <span class="md-ellipsis">
+      强/弱实体型
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%B1%9E%E6%80%A7" class="md-nav__link">
+    <span class="md-ellipsis">
+      属性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E8%B6%85%E9%94%AE%E5%80%99%E9%80%89%E9%94%AE%E4%B8%BB%E9%94%AE%E5%A4%96%E9%94%AE" class="md-nav__link">
+    <span class="md-ellipsis">
+      超键/候选键/主键/外键
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%85%B3%E7%B3%BB%E4%B8%8E%E5%85%B3%E7%B3%BB%E9%9B%86" class="md-nav__link">
+    <span class="md-ellipsis">
+      关系与关系集
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="关系与关系集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%B1%9E%E6%80%A7_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      属性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E8%A7%92%E8%89%B2" class="md-nav__link">
+    <span class="md-ellipsis">
+      角色
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%BA%A6%E6%95%B0" class="md-nav__link">
+    <span class="md-ellipsis">
+      度数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%9F%BA%E6%95%B0" class="md-nav__link">
+    <span class="md-ellipsis">
+      基数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E8%B6%85%E9%94%AE%E5%80%99%E9%80%89%E9%94%AE" class="md-nav__link">
+    <span class="md-ellipsis">
+      超键/候选键
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E9%94%AE%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      键约束
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%8F%82%E4%B8%8E%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      参与约束
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E9%94%AE%E7%BA%A6%E6%9D%9F%E7%BB%93%E5%90%88%E5%8F%82%E4%B8%8E%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      键约束结合参与约束
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%9F%BA%E6%95%B0%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      基数约束
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%AE%9E%E4%BD%93-%E5%85%B3%E7%B3%BB%E6%96%B9%E6%B3%95" class="md-nav__link">
+    <span class="md-ellipsis">
+      实体-关系方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实体-关系方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%A2%9E%E5%BC%BAer%E6%A8%A1%E5%9E%8B" class="md-nav__link">
+    <span class="md-ellipsis">
+      增强ER模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="增强ER模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E6%B3%9B%E5%8C%96%E5%8F%8D%E6%B3%9B%E5%8C%96" class="md-nav__link">
+    <span class="md-ellipsis">
+      泛化/反泛化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="泛化/反泛化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E9%87%8D%E5%8F%A0%E8%A6%86%E7%9B%96%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      重叠/覆盖约束
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E8%81%9A%E5%90%88" class="md-nav__link">
+    <span class="md-ellipsis">
+      聚合
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%84%E6%88%90%E8%A6%81%E7%B4%A0" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据模型的组成要素
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="数据模型的组成要素">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据操作
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据的完整性约束条件
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    信息论
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            信息论
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BF%A1%E6%81%AF%E8%AE%BA/%E7%BB%AA%E8%AE%BA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    绪论
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E4%BF%A1%E6%81%AF%E8%AE%BA/%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%92%8C%E7%86%B5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    不确定性和熵
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#%E4%B8%A4%E7%B1%BB%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B" class="md-nav__link">
+    <span class="md-ellipsis">
+      两类数据模型
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B" class="md-nav__link">
+    <span class="md-ellipsis">
+      概念模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="概念模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E4%BF%A1%E6%81%AF%E4%B8%96%E7%95%8C%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5" class="md-nav__link">
+    <span class="md-ellipsis">
+      信息世界的基本概念
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="信息世界的基本概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%AE%9E%E4%BD%93-%E5%AE%9E%E4%BD%93%E5%9E%8B%E5%92%8C%E5%AE%9E%E4%BD%93%E9%9B%86" class="md-nav__link">
+    <span class="md-ellipsis">
+      实体, 实体型和实体集
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实体, 实体型和实体集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%BC%BA%E5%BC%B1%E5%AE%9E%E4%BD%93%E5%9E%8B" class="md-nav__link">
+    <span class="md-ellipsis">
+      强/弱实体型
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%B1%9E%E6%80%A7" class="md-nav__link">
+    <span class="md-ellipsis">
+      属性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E8%B6%85%E9%94%AE%E5%80%99%E9%80%89%E9%94%AE%E4%B8%BB%E9%94%AE%E5%A4%96%E9%94%AE" class="md-nav__link">
+    <span class="md-ellipsis">
+      超键/候选键/主键/外键
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%85%B3%E7%B3%BB%E4%B8%8E%E5%85%B3%E7%B3%BB%E9%9B%86" class="md-nav__link">
+    <span class="md-ellipsis">
+      关系与关系集
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="关系与关系集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%B1%9E%E6%80%A7_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      属性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E8%A7%92%E8%89%B2" class="md-nav__link">
+    <span class="md-ellipsis">
+      角色
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%BA%A6%E6%95%B0" class="md-nav__link">
+    <span class="md-ellipsis">
+      度数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%9F%BA%E6%95%B0" class="md-nav__link">
+    <span class="md-ellipsis">
+      基数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E8%B6%85%E9%94%AE%E5%80%99%E9%80%89%E9%94%AE" class="md-nav__link">
+    <span class="md-ellipsis">
+      超键/候选键
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E9%94%AE%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      键约束
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%8F%82%E4%B8%8E%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      参与约束
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E9%94%AE%E7%BA%A6%E6%9D%9F%E7%BB%93%E5%90%88%E5%8F%82%E4%B8%8E%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      键约束结合参与约束
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%9F%BA%E6%95%B0%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      基数约束
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E5%AE%9E%E4%BD%93-%E5%85%B3%E7%B3%BB%E6%96%B9%E6%B3%95" class="md-nav__link">
+    <span class="md-ellipsis">
+      实体-关系方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实体-关系方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E5%A2%9E%E5%BC%BAer%E6%A8%A1%E5%9E%8B" class="md-nav__link">
+    <span class="md-ellipsis">
+      增强ER模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="增强ER模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E6%B3%9B%E5%8C%96%E5%8F%8D%E6%B3%9B%E5%8C%96" class="md-nav__link">
+    <span class="md-ellipsis">
+      泛化/反泛化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="泛化/反泛化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E9%87%8D%E5%8F%A0%E8%A6%86%E7%9B%96%E7%BA%A6%E6%9D%9F" class="md-nav__link">
+    <span class="md-ellipsis">
+      重叠/覆盖约束
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E8%81%9A%E5%90%88" class="md-nav__link">
+    <span class="md-ellipsis">
+      聚合
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%84%E6%88%90%E8%A6%81%E7%B4%A0" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据模型的组成要素
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="数据模型的组成要素">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据操作
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据的完整性约束条件
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+
+
+                  
+
+
+  <h1>数据模型</h1>
+
+<details class="info" open="open">
+<summary>信息</summary>
+<ul>
+<li>中科大数据库系统概论PPT: <a href="http://staff.ustc.edu.cn/~huangzhy/Course/files/DB2022/chp1-1.pdf">http://staff.ustc.edu.cn/~huangzhy/Course/files/DB2022/chp1-1.pdf</a></li>
+<li>数据库系统概论(第5版): <a href="https://github.com/tomtang110/comp9311/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA(%E7%AC%AC5%E7%89%88).pdf">https://github.com/tomtang110/comp9311/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA(%E7%AC%AC5%E7%89%88).pdf</a></li>
+<li>默认省略例子框</li>
+</ul>
+</details>
+<p>数据模型是一种对现实世界数据特征的抽象, 是数据库系统的核心和基础. 由于计算机不可能直接处理现实世界中的数据, 也就是首先要数字化, 把显示世界中具体的人, 物, 活动, 概念用数据模型这个工具来抽象, 表示和处理. 通俗的讲, 数据模型就是现实世界的模拟.</p>
+<h2 id="%E4%B8%A4%E7%B1%BB%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B">两类数据模型<a class="headerlink" href="#%E4%B8%A4%E7%B1%BB%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B" title="Permanent link">&para;</a></h2>
+<p>数据模型应该满足三方面要求: 一是比较真实地模拟显示世界, 二是容易为人所理解, 三是便于在计算机上实现. 一种数据模型要很好的, 全面地满足这三方面的要求在目前尚很困难. 因此, 在数据库系统中针对不同的使用对象和应用目的, 采用不同的数据模型.</p>
+<p>如同在建筑设计和施工不同阶段需要不同的图纸一样, 在开发实施数据库应用系统中需要使用不同的数据模型: 概念模型, 逻辑模型和物理模型. 根据模型应用的不同目的, 又将这些模型划为两大类, 第一类包含概念模型, 第二类包含逻辑模型和物理模型.</p>
+<ul>
+<li>第一类<ul>
+<li>概念模型: 是按照用户的观点来对数据和信息建模, 主要用于数据库设计</li>
+</ul>
+</li>
+<li>第二类<ul>
+<li>逻辑模型: 是按照计算机系统的观点对数据建模, 主要用于数据库管理系统的实现</li>
+<li>物理模型: 是对数据最底层的抽象, 描述的是系统内部的表示方式和存取方法, 是面向计算机系统的</li>
+</ul>
+</li>
+</ul>
+<p>为了把显示世界中的具体事务抽象, 组织为某一数据库管理系统支持的数据模型, 人们常常首先将现实世界抽象为信息世界, 然后将信息世界转换为机器世界. 也就是说, 首先把现实世界中的客观对象抽象为一种信息结构, 这种信息结构并不依赖于具体的数据库管理系统, 而是概念级的模型, 然后再把概念机模型转换为计算机上某一数据库管理系统支持的数据模型.</p>
+<p>从现实世界到概念模型的转换是由数据库设计人员完成的; 从概念模型到逻辑模型的转换可以由数据库设计人员完成, 也可以用数据库设计工具协助设计人员完成. 从逻辑模型到物理模型的转换主要由数据库管理系统完成.</p>
+<p>图片表示, 点击<a href="https://img.ricolxwz.io/2024/08/2bc049b413b75e4859bb24979b34414f.png">这里</a>.</p>
+<h2 id="%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B">概念模型<a class="headerlink" href="#%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B" title="Permanent link">&para;</a></h2>
+<p>概念模型是现实世界到机器世界的中间层次. 概念模型用于信息世界的建模, 是现实世界到信息世界的第一层抽象, 是数据库设计人员和用户之间交流的语言, 因此概念模型应该有较强的语义表达能力, 方便用户理解.</p>
+<h3 id="%E4%BF%A1%E6%81%AF%E4%B8%96%E7%95%8C%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">信息世界的基本概念<a class="headerlink" href="#%E4%BF%A1%E6%81%AF%E4%B8%96%E7%95%8C%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5" title="Permanent link">&para;</a></h3>
+<h4 id="%E5%AE%9E%E4%BD%93-%E5%AE%9E%E4%BD%93%E5%9E%8B%E5%92%8C%E5%AE%9E%E4%BD%93%E9%9B%86">实体, 实体型和实体集<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><a class="headerlink" href="#%E5%AE%9E%E4%BD%93-%E5%AE%9E%E4%BD%93%E5%9E%8B%E5%92%8C%E5%AE%9E%E4%BD%93%E9%9B%86" title="Permanent link">&para;</a></h4>
+<ul>
+<li>实体(Entity)表示一个离散对象. 不同的实体是不同的, 只能代表他自己一种. 如鲫鱼, 鲤鱼, 金龙鱼, 茉莉蜜茶, 冰红茶, 青梅绿茶. 这些都可以称之为实体. 注意上述的例子中都是一个非常具体的东西</li>
+<li>实体型(Entity Type)是实体名及其属性名集合来抽象和刻画的同类实体. 如鲫鱼, 鲤鱼, 金龙鱼前面三种鱼我们将其统称为鱼. 🐟具有什么属性呢? 🐟有品种, 长度, 重量等属性, 那么🐟这个统称和这些属性名的组合, 将这个组合称为实体型, 即🐟(品种, 长度, 重量). 再比方说学生(学号, 姓名, 性别, 班级)也是实体型, 汽车(品牌, 价格, 产地)也是实体型, 在ERD中, 通常用矩形表示统称, 用椭圆表示属性</li>
+<li>实体集(Entity Set)是同一类型实体的集合, 一般是有限的. 如{茉莉蜜茶, 冰红茶, 青梅绿茶}这就是一个实体集, {鲫鱼, 鲤鱼, 金龙鱼}这也是一个实体集</li>
+</ul>
+<h5 id="%E5%BC%BA%E5%BC%B1%E5%AE%9E%E4%BD%93%E5%9E%8B">强/弱实体型<a class="headerlink" href="#%E5%BC%BA%E5%BC%B1%E5%AE%9E%E4%BD%93%E5%9E%8B" title="Permanent link">&para;</a></h5>
+<p>强实体型是由独立主键的实体型, 弱实体型是没有独立主键的实体型. 这里主要介绍弱实体型.</p>
+<p>弱实体的存在取决于一个识别拥有者实体(Identifying Owner Entity)的存在. 换句话说, 如果没有与之相关的强实体存在, 弱实体本身就无法存在. 弱实体集必须通过一个一对多/多对一的识别关系和强实体集相联系. 在这种关系中, 强实体集通过主键来识别和关联弱实体集. 弱实体集必须全部参与到关系中(即<a href="/数据库/数据模型/#参与约束">完全参与约束</a>), 弱实体集中的每一个实体必须参与这个关系. 弱实体集在ERD中表现为一个嵌套的方形(方形外面套一个方形).  强弱实体的关系集在ERD中表现为一个嵌套的菱形(菱形外面套一个菱形).</p>
+<p>区分符(discriminator)或部分键(partial key)是弱实体型中的一组/个属性, 这个/这些属性用于区分与同一个强实体关联的弱实体. 弱实体的主键是由与之相关的强实体型的主键加上弱实体型的区分符组成的, 这是因为弱实体的存在依赖于强实体, 弱实体的主键不仅包含其自己的区分符, 还需要包含相关强实体的主键. 区分符在ERD中表现为下划虚线.</p>
+<p>如, 贷款和还款. "贷款"是一个强实体集, "还款"是一个弱实体集. 每一个贷款可以有多个还款, 这是一个一对多的关系. 所有的还款必须参与到关系中. Load_ID是贷款的主键, Repayment_ID是还款的编号, 是区分符, 用于区分同一笔贷款中的不同还款. 还款表的主键应该是(Loan_ID, Repayment_Number). 如<a href="https://img.ricolxwz.io/2024/08/e75dfbf672dd913e0347777af2d9bd14.png">图</a>.</p>
+<h4 id="%E5%B1%9E%E6%80%A7">属性<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup><a class="headerlink" href="#%E5%B1%9E%E6%80%A7" title="Permanent link">&para;</a></h4>
+<ul>
+<li>属性(Attribute): 实体所具有的某一方面的特性, 属性可以只有一个值, 也可以有多个值. 一个值的属性用一个椭圆表示, 多个值的属性用两个椭圆表示(椭圆外面再套一个椭圆); 属性也可以是简单的, 或者是复合的, 简单属性只有一层椭圆, 复合属性由多层椭圆表示, 如<a href="https://img.ricolxwz.io/2024/08/0dd1b5682e37ff151a9151b99636c7e3.png">图</a></li>
+<li>域(Domain): 一个属性可能取的所有属性值的范围称为该属性的域</li>
+<li>码(Key): 唯一标识实体的属性集, 在ERD中, 有下划线的属性为码</li>
+</ul>
+<h4 id="%E8%B6%85%E9%94%AE%E5%80%99%E9%80%89%E9%94%AE%E4%B8%BB%E9%94%AE%E5%A4%96%E9%94%AE">超键/候选键/主键/外键<a class="headerlink" href="#%E8%B6%85%E9%94%AE%E5%80%99%E9%80%89%E9%94%AE%E4%B8%BB%E9%94%AE%E5%A4%96%E9%94%AE" title="Permanent link">&para;</a></h4>
+<ul>
+<li>超键: 可以唯一标识一个实体的属性集称为超键. 如属性集Sno, Sname, Sage, Ssex. 在这个结构中, 只有包含Sno的属性集合才能是超键, 因为如果不包含Sno, 可能会出现同名, 同姓的人, 也可能出现同岁的人, 所以在上面的关系模式中只有通过学号才能找到某个特定的学生. 如(Sno), (Sno, Sname), (Sno, Sname, Sage)都可以称为超键</li>
+<li>候选键: 能唯一标识实体并且不含多余属性的属性级称为候选键. 在上面提到的例子中, 如果没有重名的学生, Sname也可以当作是候选键, 这里可以看出候选键是一种特殊的超键, 即把超键中多余的属性删除就可以叫作候选键. 所以在上述关系中, (Sno), (Sname)可以叫作候选键</li>
+<li>主键: 在若干候选键中, 随意指定一个作为关键字, 此关键字即为主键. 很好理解, 就是在候选键的基础上任意选择一个作为主键. 同时衍生出复合主键和联合主键. 假设我们没有学号字段, 如果可以通过姓名, 年龄, 性别一同找到某个特定的学生, 那么就称(name, age, sex)为复合主键, 由多个主键联合形成的键为联合主键</li>
+<li>外键: 若将一张表的数据和另一张表的数据通过某一个属性关联起来, 这种属性称为外键. 如上述例子中, student表中的主键列Sno可以作为score表中Sno的外键列. 虽然Sno在student表中是主键, 但是在score表中它只是一个普通属性</li>
+</ul>
+<h4 id="%E5%85%B3%E7%B3%BB%E4%B8%8E%E5%85%B3%E7%B3%BB%E9%9B%86">关系与关系集<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup><a class="headerlink" href="#%E5%85%B3%E7%B3%BB%E4%B8%8E%E5%85%B3%E7%B3%BB%E9%9B%86" title="Permanent link">&para;</a></h4>
+<ul>
+<li>关系(Relationship): 实体(型)内部的关系和实体(型)之间的关系. 实体内部的关系通常是指组成实体的各个属性之间的关系, 实体之间的关系通常是指不同实体集之间的关系</li>
+<li>关系集(Relationship Set): 同类关系的集合</li>
+<li>关系型(Relationship TYpe): 是关系名及其属性名集合来抽象和刻画的同类关系 </li>
+</ul>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>关系和实体在表现形式上是类似的, 都有"集"/"型", 都有属性. 但是在本质上, 它们是不同的.</p>
+</details>
+<h5 id="%E5%B1%9E%E6%80%A7_1">属性<a class="headerlink" href="#%E5%B1%9E%E6%80%A7_1" title="Permanent link">&para;</a></h5>
+<p>就如同实体, 关系也是可以有属性的. 如John在2024学年的第二个学期参加了COMP9120课程. 所以实体John和COMP9120课程产生关系. 这个关系有一个属性是"学期". </p>
+<h5 id="%E8%A7%92%E8%89%B2">角色<a class="headerlink" href="#%E8%A7%92%E8%89%B2" title="Permanent link">&para;</a></h5>
+<p>每一个参与关系的实体可以被分配一个角色. 如下述一元关系中员工集体内部的"管理"关系. 一个员工实体被分配为"下属"角色, 另一个员工实体被分配为"经理"角色. </p>
+<h5 id="%E5%BA%A6%E6%95%B0">度数<a class="headerlink" href="#%E5%BA%A6%E6%95%B0" title="Permanent link">&para;</a></h5>
+<p>度数(Degree)描述的是立案你想中涉及的不同实体型的数量.</p>
+<ul>
+<li>一元关系(Unary Relationship): 关系仅涉及一个实体型, 又称为"递归关系", 意味着实体集中的一个实例与同一个实体集中的另一个实例存在关系. 如一个人和另一人形成"已婚"的关系, 这里实体型就是"人". 又如"员工"实体集内部可能存在一个"管理"关系, 一个员工管理另一个员工</li>
+<li>二元关系(Binary Relationship): 关系涉及两个实体型, 如学生和课程之间的注册关系, 这里的实体型是"学生"和"课程"</li>
+<li>多元关系: 关系涉及三个或者更多的实体型, 如供应商, 产品和仓库之间的运输关系, 这里的实体型是"供应商", "产品"和"仓库"</li>
+</ul>
+<h5 id="%E5%9F%BA%E6%95%B0">基数<a class="headerlink" href="#%E5%9F%BA%E6%95%B0" title="Permanent link">&para;</a></h5>
+<p>基数(Cardinality)描述的是两个实体型之间的产生关系的实例数量的关系.</p>
+<ul>
+<li>一对一: 实体集A中的一个实体对应B中的一个实体, 记为1:1, 如一个学生只有一个成绩</li>
+<li>一对多: 实体集A中的一个实体对应B中的多个实体, 记为1:N, 如一个学院有多名学生 </li>
+<li>多对多: 多实体对多实体, 记为M:N, 如一位老师上多门课, 一门课有多个老师</li>
+</ul>
+<h5 id="%E8%B6%85%E9%94%AE%E5%80%99%E9%80%89%E9%94%AE">超键/候选键<a class="headerlink" href="#%E8%B6%85%E9%94%AE%E5%80%99%E9%80%89%E9%94%AE" title="Permanent link">&para;</a></h5>
+<ul>
+<li>实体集有超键, 关系集也有超键. 在关系集中, 超键是由参与关系的各实体的主键组成的. 如在Enrols关系中, Student实体集的主键是student_id, Course实体集的主键是course_id, 所以它们的组合(student_id, course_id)就是Enrols关系的超键.</li>
+<li>实体集有候选键, 关系集也有候选键. 在关系集中, 确定候选键要考虑到<a href="/数据库/数据模型/#基数">基数</a>. 以Works_In关系集为例, 它用来表示员工和部门之间的关系, 这里的场景是一个员工可以在多个部门工作, 并且一个部门也可以有多个员工, 因此是多对多的关系, 该关系集的候选键是(employee_id, department_id), 只有这样才能标识哪个员工在哪一个部门工作. 再以Manager-Department关系集为例, 每个部门最多只有一个经理, 这表示一个部门和经理的关系是一对一或多对一的关系, 这种情况下, department_id就是候选键. 因为每个部门只会对应一个经理</li>
+</ul>
+<details class="tip" open="open">
+<summary>Tip</summary>
+<p>我们不会在ERD中表现出关系集的键, 但是会表现出实体集的键. </p>
+</details>
+<h5 id="%E9%94%AE%E7%BA%A6%E6%9D%9F">键约束<a class="headerlink" href="#%E9%94%AE%E7%BA%A6%E6%9D%9F" title="Permanent link">&para;</a></h5>
+<p>键约束指的是在一个实体集中, 每一个实体只能参与最多一次关系, 那么就称该关系对该实体集由键约束. 同时, 这个实体集的主键就是关系集的候选键. 键约束只会出现在一对一关系和一对多/多对一关系中. 在一对一关系中, 两个实体集都有键约束; 在多对一关系中, "多"那一侧的实体集有键约束.</p>
+<p>如, 一个职工最多只能在一个部门工作, 但是一个部门可以有多个员工. 此时是一对多/多对一的关系. "多"的那一侧是职工实体集, 对于职工实体集有键约束, 且职工实体集的主键emp_id就是该关系集的候选键.</p>
+<p>键约束在ERD中的表现形式是一根箭头, 如<a href="https://img.ricolxwz.io/2024/08/3ad7c122d9e79fcf8efc11aab38e51b5.png">图</a>.</p>
+<h5 id="%E5%8F%82%E4%B8%8E%E7%BA%A6%E6%9D%9F">参与约束<a class="headerlink" href="#%E5%8F%82%E4%B8%8E%E7%BA%A6%E6%9D%9F" title="Permanent link">&para;</a></h5>
+<p>参与约束是指在一个实体集中, 所有的实体或者部分的实体必须参与到关系中, 据此, 可以分为完全参与和部分参与.</p>
+<p>如, 所有员工必须至少属于一个部门. </p>
+<p>完全参与约束在ERD中的表现形式是一条粗线, 如<a href="https://img.ricolxwz.io/2024/08/637d503618d08762f2d1e835b4e20e6c.png">图</a>.</p>
+<h5 id="%E9%94%AE%E7%BA%A6%E6%9D%9F%E7%BB%93%E5%90%88%E5%8F%82%E4%B8%8E%E7%BA%A6%E6%9D%9F">键约束结合参与约束<a class="headerlink" href="#%E9%94%AE%E7%BA%A6%E6%9D%9F%E7%BB%93%E5%90%88%E5%8F%82%E4%B8%8E%E7%BA%A6%E6%9D%9F" title="Permanent link">&para;</a></h5>
+<p>如果所有的实体正好都参与一次关系, 那么该实体所处的实体集同时受到键约束和参与约束, 如<a href="https://img.ricolxwz.io/2024/08/43388783c414a63ca2a6096caf8dacc1.png">图</a>.</p>
+<h5 id="%E5%9F%BA%E6%95%B0%E7%BA%A6%E6%9D%9F">基数约束<a class="headerlink" href="#%E5%9F%BA%E6%95%B0%E7%BA%A6%E6%9D%9F" title="Permanent link">&para;</a></h5>
+<p>基数约束是指对参与某个关系的实体集中的实体在在某个关系中至少参与多少次和最多参与多少次. 在ERD中, 用min...max的形式表示. </p>
+<p>如, 所有的员工必须在1-3个部门工作, 如<a href="https://img.ricolxwz.io/2024/08/ddf4672192186f4aa0ca1c07cdea115c.png">图</a>.</p>
+<h3 id="%E5%AE%9E%E4%BD%93-%E5%85%B3%E7%B3%BB%E6%96%B9%E6%B3%95">实体-关系方法<a class="headerlink" href="#%E5%AE%9E%E4%BD%93-%E5%85%B3%E7%B3%BB%E6%96%B9%E6%B3%95" title="Permanent link">&para;</a></h3>
+<p>概念模型是对信息世界的建模, 所以概念模型应该能够方便, 准确地表示出上述信息世界中的常用概念. 概念模型表示的方法有很多, 其中最为常用的是P.P.S.Chen于1976年提出的实体-关系方法(Entity-Relasionship Approach). 该方法用E-R图来描述现实世界的概念模型, E-R方法也被称为E-R模型.</p>
+<p>ERD图怎么画, 在上面的各个小节中描述地很清楚了.</p>
+<h4 id="%E5%A2%9E%E5%BC%BAer%E6%A8%A1%E5%9E%8B">增强ER模型<a class="headerlink" href="#%E5%A2%9E%E5%BC%BAer%E6%A8%A1%E5%9E%8B" title="Permanent link">&para;</a></h4>
+<p>原版的ER模型不支持泛化(Generalization)/反泛化(Specialization)和抽象. 增强ER模型解决了这一痛点, 它囊括了基础ER的所有思想, 还包括了一些面向对象的新东西, 如子类, 超类, 泛化/反泛化, 聚合. 增强ER模型又叫作扩展ER模型, 记为E2R或者EER.</p>
+<h5 id="%E6%B3%9B%E5%8C%96%E5%8F%8D%E6%B3%9B%E5%8C%96">泛化/反泛化<a class="headerlink" href="#%E6%B3%9B%E5%8C%96%E5%8F%8D%E6%B3%9B%E5%8C%96" title="Permanent link">&para;</a></h5>
+<p>如Person实体集表示了一般的人员概念, 它包含了id, name, phone, address这些属性. 这是泛化的结果, 将两个更加具体的实体集Employee和Customer的共同属性抽象为一个更一般的Person实体集. Person实体集还可以反泛化为为两个更加具体的子实体集, 即Employee和Customer. 见<a href="https://img.ricolxwz.io/2024/08/a95e1bdc0b959cb71b3401f449141373.png">图</a>. 我们用isA关系集来表示层次结构中的继承关系, isA关系在ERD中用三角形表示.</p>
+<p>若两个实体型EF的关系是isA关系(F是一个E), 则: </p>
+<ul>
+<li>F的属性是E的属性的超集</li>
+<li>F的实体集是E的实体集的子集</li>
+<li>F是E的反泛化的结果</li>
+<li>E是F的泛化的结果 </li>
+<li>F作为子类会继承E的所有属性</li>
+</ul>
+<h6 id="%E9%87%8D%E5%8F%A0%E8%A6%86%E7%9B%96%E7%BA%A6%E6%9D%9F">重叠/覆盖约束<a class="headerlink" href="#%E9%87%8D%E5%8F%A0%E8%A6%86%E7%9B%96%E7%BA%A6%E6%9D%9F" title="Permanent link">&para;</a></h6>
+<ul>
+<li>重叠约束(Overlap Constraints): 指定了一个实体是否可以属于多个低层次的实体集. 重叠约束还有两种类型:<ul>
+<li>不相交(Disjoint): 一个实体只能属于一个低层次的实体集, 在ERD中, 通过在isA三角形旁边写上disjoint来表示这种约束. 如, Employee和Customer它们是不相交的, 那么一个实体只能属于Empolyee和Customer之一, 不能同时属于两者</li>
+<li>重叠(Overlapping): 一个实体可以同时属于多个低层次的实体集, 这是默认情况(可能在一些参考书中不是默认情况). 如, 一个实体也可以同时是Employee和Customer</li>
+</ul>
+</li>
+<li>覆盖约束(Covering Constraints): 指定了一个实体是否必须属于至少一个低层次的实体集. 覆盖约束还有两种类型:<ul>
+<li>完全覆盖: 一个实体必须属于至少一个低层次的实体集. 在ERD中, 通过在ISA三角形和父类之间画一条粗线来表示. 如, 一个实体必须是Employee或Customer中的一个</li>
+<li>部分覆盖: 一个实体不必属于任何一个低层次的实体集, 这是默认情况. 如, 有些实体可能既不是Employee也不是Customer</li>
+</ul>
+</li>
+</ul>
+<h5 id="%E8%81%9A%E5%90%88">聚合<a class="headerlink" href="#%E8%81%9A%E5%90%88" title="Permanent link">&para;</a></h5>
+<p>聚合(Aggregation)表示我们将一组实体和关系视为一个更高级别的实体. </p>
+<p>如<a href="https://img.ricolxwz.io/2024/08/77127e293d6f948352193e79dfcc6fa9.png">图</a>.</p>
+<p>图中, 整个Sponsor关系(包括Project和Department)被聚合为一个新的实体, 这个新的实体作为Monitors关系的一部分与Employee进行交互. 在这里, Monitors关系连接了Employee和聚合后的Sponsors实体, 表示某个员工复杂监控某个部门对项目的赞助, 直到某个时间为止.</p>
+<h2 id="%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%84%E6%88%90%E8%A6%81%E7%B4%A0">数据模型的组成要素<a class="headerlink" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%BB%84%E6%88%90%E8%A6%81%E7%B4%A0" title="Permanent link">&para;</a></h2>
+<p>一般来讲, 数据模型是严格定义的一组概念的集合. 这些概念精确地描述了系统的静态特性, 动态特性和完整性约束条件(integrity constraints). 因此数据模型通常由数据结构, 数据操作和数据的完整性约束条件三部分组成.</p>
+<h3 id="%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构<a class="headerlink" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" title="Permanent link">&para;</a></h3>
+<p>数据结构描述数据库的组成对象以及对象之间的关系. 简单来说, 数据结构包括内容和属性, 以及对象之间的关系. 数据结构是刻画一个数据模型性质最重要的方面. 因此在数据库系统各种, 人们通常按照其数据结构的类型来命名数据模型. 例如层次结构, 网状结构和关系结构的数据模型分别命名为层次模型, 网状模型和关系模型. 数据结构是对系统静态特征的描述.</p>
+<h3 id="%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">数据操作<a class="headerlink" href="#%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C" title="Permanent link">&para;</a></h3>
+<p>数据操作是指对数据库中的各种对象(型)的实例值允许执行的操作的集合, 包括操作及有关的操作规则. 数据库主要有查询和更新(包括插入, 删除, 修改)两大类操作. 数据类型必须定义这些操作的确切含义, 操作符号, 操作规则(如优先级)以及实现操作的语言. 数据操作是对系统动态特性的描述.</p>
+<h3 id="%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6">数据的完整性约束条件<a class="headerlink" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%8C%E6%95%B4%E6%80%A7%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6" title="Permanent link">&para;</a></h3>
+<p>数据的完整性约束条件(integrity constraints)是一组完整性规则. 完整性规则是给定的数据模型中数据极其关系所具有的制约和依存规则, 用以限定符合数据模型的数据库状态和状态的变化, 以保证数据的正确, 有效和相容. </p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://zh.wikipedia.org/wiki/ER%E6%A8%A1%E5%9E%8B">https://zh.wikipedia.org/wiki/ER%E6%A8%A1%E5%9E%8B</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://blog.csdn.net/weixin_49102635/article/details/122921734">https://blog.csdn.net/weixin_49102635/article/details/122921734</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://zhangbc.github.io/2019/04/06/db_data_model/">https://zhangbc.github.io/2019/04/06/db_data_model/</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://juejin.cn/post/6970075418997047332">https://juejin.cn/post/6970075418997047332</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <script src="https://giscus.app/client.js"
+        data-repo="ricolxwz/gk"
+        data-repo-id="R_kgDOMZ6IeA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOMZ6IeM4ChF-C"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 ricolxwz
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/ricolxwz" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://gitlab.com/ricolxwz" target="_blank" rel="noopener" title="gitlab.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="m503.5 204.6-.7-1.8-69.7-181.78c-1.4-3.57-3.9-6.59-7.2-8.64-2.4-1.55-5.1-2.515-8-2.81-2.9-.295-5.7.083-8.4 1.11-2.7 1.02-5.1 2.66-7.1 4.78-1.9 2.12-3.3 4.67-4.1 7.44l-47 144H160.8l-47.1-144c-.8-2.77-2.2-5.31-4.1-7.43-2-2.12-4.4-3.75-7.1-4.77a18.1 18.1 0 0 0-8.38-1.113 18.4 18.4 0 0 0-8.04 2.793 18.09 18.09 0 0 0-7.16 8.64L9.267 202.8l-.724 1.8a129.57 129.57 0 0 0-3.52 82c7.747 26.9 24.047 50.7 46.447 67.6l.27.2.59.4 105.97 79.5 52.6 39.7 32 24.2c3.7 1.9 8.3 4.3 13 4.3 4.7 0 9.3-2.4 13-4.3l32-24.2 52.6-39.7 106.7-79.9.3-.3c22.4-16.9 38.7-40.6 45.6-67.5 8.6-27 7.4-55.8-2.6-82z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://hub.docker.com/u/ricolxwz" target="_blank" rel="noopener" title="hub.docker.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M349.9 236.3h-66.1v-59.4h66.1v59.4zm0-204.3h-66.1v60.7h66.1V32zm78.2 144.8H362v59.4h66.1v-59.4zm-156.3-72.1h-66.1v60.1h66.1v-60.1zm78.1 0h-66.1v60.1h66.1v-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7H2.4c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4.4 67.6.1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zm-511.1-27.9h-66v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm78.1 0h-66.1v59.4h66.1v-59.4zm-78.1-72.1h-66.1v60.1h66.1v-60.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.code.select", "content.tabs.link", "content.footnote.tooltips", "content.tooltips", "navigation.tabs", "navitation.sections", "navigation.expand", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "navigation.tracking"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../js/open_in_new_tab.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>
